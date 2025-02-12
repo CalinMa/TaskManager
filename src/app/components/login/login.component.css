@@ -32,6 +32,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .login-button,
@@ -43,8 +44,29 @@
   align-items: center;
   min-width: 100px;
   height: 48px;
+  flex-grow: 1; 
+  margin-bottom: 10px;
 }
 
 .spinner {
   position: absolute;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 15px; 
+    max-width: 90%;
+  }
+
+  .button-row {
+    gap: 10px;
+  }
+
+  .login-button,
+  .register-button,
+  .verify-button {
+    min-width: 80px;
+    height: 40px;
+  }
 }
