@@ -1,0 +1,33 @@
+.register-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+}
+
+mat-checkbox {
+  margin-bottom: 15px;
+}
+.snackbar-success {
+  background-color: #4caf50; /* Green for success */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.snackbar-error {
+  background-color: #f44336; /* Red for errors */
+  color: #ffffff;
+  font-weight: bold;
+}

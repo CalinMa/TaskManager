@@ -1,0 +1,96 @@
+<div class="login-container">
+  <!-- Login Form -->
+  <form
+    *ngIf="!isTwoFactorStage"
+    [formGroup]="loginForm"
+    (ngSubmit)="onLogin()"
+    class="form-container"
+  >
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        formControlName="username"
+        placeholder="Enter your username"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        placeholder="Enter your password"
+        type="password"
+        required
+      />
+    </mat-form-field>
+
+    <div class="button-row">
+      <!-- Login Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="isLoading"
+        class="login-button"
+      >
+        <div class="content">
+          <mat-progress-spinner
+            *ngIf="isLoading"
+            mode="indeterminate"
+            diameter="20"
+            class="spinner"
+          ></mat-progress-spinner>
+          <span *ngIf="!isLoading">Login</span>
+        </div>
+      </button>
+
+      <!-- Register Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="register()"
+        class="register-button"
+      >
+        <span>Register</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- 2FA Form -->
+  <form
+    *ngIf="isTwoFactorStage"
+    [formGroup]="twoFactorForm"
+    (ngSubmit)="onVerify2FA()"
+    class="form-container"
+  >
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>2FA Code</mat-label>
+      <input
+        matInput
+        formControlName="twoFactorCode"
+        placeholder="Enter the 2FA code"
+        required
+      />
+    </mat-form-field>
+
+    <!-- Verify Button -->
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="isLoading"
+      class="verify-button"
+    >
+      <div class="content">
+        <mat-progress-spinner
+          *ngIf="isLoading"
+          mode="indeterminate"
+          diameter="20"
+          class="spinner"
+        ></mat-progress-spinner>
+        <span *ngIf="!isLoading">Verify</span>
+      </div>
+    </button>
+  </form>
+</div>

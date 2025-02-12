@@ -1,0 +1,36 @@
+<div class="register-container">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Enter your username" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" placeholder="Enter your full name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" placeholder="Enter your email" type="email" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" placeholder="Enter your password" type="password" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber" placeholder="Enter your phone number" type="tel" required />
+    </mat-form-field>
+
+    <!-- Optional isActive Checkbox -->
+    <mat-checkbox formControlName="isActive">Active Account</mat-checkbox>
+
+    <button mat-raised-button color="primary" [disabled]="registerForm.invalid || isLoading">
+      <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="20"></mat-progress-spinner>
+      <span *ngIf="!isLoading">Register</span>
+    </button>
+  </form>
+</div>

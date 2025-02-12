@@ -1,0 +1,40 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  
+  .task-form-container {
+    width: 100%;
+    max-width: 600px; 
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    background-color: #fbfbfa;
+  }
+  
+  .task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  mat-form-field {
+    display: block;
+    width: 100%;
+  }
+  
+  mat-checkbox {
+    align-self: flex-start;
+    margin-bottom: 16px;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 200px;
+    align-self: center;
+  }
+  

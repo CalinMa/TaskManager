@@ -1,0 +1,25 @@
+<div class="task-form-container">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    
+      <mat-form-field appearance="outline">
+        <mat-label>Task Title</mat-label>
+        <input matInput placeholder="Enter task title" formControlName="title" required />
+        <mat-error *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+          Title is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Task Description</mat-label>
+        <textarea matInput placeholder="Enter task description" formControlName="description"></textarea>
+      </mat-form-field>
+  
+      <mat-checkbox formControlName="completed">Task Completed</mat-checkbox>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid">
+        Save Task
+      </button>
+      <!-- <button mat-button type="button" (click)="">Cancel</button> -->
+    </form>
+  </div>
+  

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend  # Path to your backend folder
+    env_file:
+      - ./backend/.env  # Reference to the .env file in the backend folder
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db  # Ensure db starts before backend
+    networks:
+      - taskmanager-network
+
+  frontend:
+    build:
+      context: .  # Path to your main folder (frontend)
+    ports:
+      - "4200:4200"
+    networks:
+      - taskmanager-network
+
+  db:
+    image: mongo:latest
+    container_name: taskmanager-db
+    volumes:
+      - mongo-data:/data/db  # Persistent storage for the database
+    networks:
+      - taskmanager-network
+
+networks:
+  taskmanager-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
