@@ -28,7 +28,7 @@ export async function login(username, password) {
     const message = `Your 2FA code is: ${twoFactorCode}`;
     await sendEmail(user.email, subject, message);
 
-    console.log(`2FA Code sent to ${user.email}`); // For debugging purposes only
+    console.log(`2FA Code sent to ${user.email}`, `The code is ${twoFactorCode}`); // For debugging purposes only
 
     // Return the user ID to the client for 2FA verification
     return { userId: user._id };
