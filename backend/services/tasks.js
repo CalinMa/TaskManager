@@ -17,7 +17,7 @@ export async function getAllTasks(customerId) {
 
 // Create a new task
 export async function createTask(taskData) {
-    console.log('task data', taskData)
+    
     const { title, description, completed, customerId } = taskData;
     if (!customerId) {
         throw new Error('Customer ID is required to create a task');

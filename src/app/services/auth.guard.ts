@@ -8,8 +8,8 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    // Check if the user has a valid auth token in localStorage
-    const token = localStorage.getItem('authToken');
+    // Check if the auth token exists in cookies
+    const token = this.getCookie('authToken');
 
     if (token) {
       // User is authenticated, allow access
@@ -19,5 +19,17 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
+  }
+
+  // Helper function to retrieve a cookie by its name
+  private getCookie(name: string): string | null {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
   }
 }

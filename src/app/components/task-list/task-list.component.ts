@@ -30,16 +30,11 @@ export class TaskListComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    const customerId = localStorage.getItem('customerId')
-    if (customerId) {
-      this.loadTasks(customerId);
-    } else {
-      console.error('No customerId found in localStorage');
-    }
+    this.loadTasks();
   }
 
-  loadTasks(customerId: string): void {
-    this.taskService.getTasks(customerId).subscribe(tasks => {
+  loadTasks(): void {
+    this.taskService.getTasks().subscribe(tasks => {
       this.tasks = tasks;
     });
   }
@@ -49,28 +44,26 @@ export class TaskListComponent implements OnInit {
   }
 
   saveEdit(task: Task): void {
-    const customerId = localStorage.getItem('customerId')
+   
     this.taskService.updateTask(task).subscribe(() => {
       this.editingTaskId = null;
-      if (customerId) 
-      this.loadTasks(customerId);
+      this.loadTasks();
     });
   }
 
   cancelEdit(): void {
-    const customerId = localStorage.getItem('customerId')
+  
     this.editingTaskId = null;
-    if (customerId)
-    this.loadTasks(customerId);
+    this.loadTasks();
   }
 
   confirmDelete(taskId: number): void {
     const dialogRef = this.dialog.open(DeleteConfirmationComponent);
-    const customerId = localStorage.getItem('customerId')
+    
     dialogRef.afterClosed().subscribe(result => {
-      if (result && customerId) {
-        this.taskService.deleteTask(taskId, customerId).subscribe(() => {
-          this.loadTasks(customerId);
+      if (result ) {
+        this.taskService.deleteTask(taskId).subscribe(() => {
+          this.loadTasks();
         });
       }
     });
@@ -79,7 +72,7 @@ export class TaskListComponent implements OnInit {
  
   generateSuggestions(): void {
     this.isLoading = true;
-    console.log(this.isLoading)
+
     const prompt = `Suggest one daily task related to ${this.taskKeyword}. The answer must have a title, followed by ':' and then a description. No more than 50 chars`;
   
     this.aiService.getSuggestions(prompt).subscribe({
@@ -95,24 +88,16 @@ export class TaskListComponent implements OnInit {
   }
   
   addSuggestedTask(suggesttion: string): void {
-    const customerId = localStorage.getItem('customerId')
-    if (!customerId) {
-      console.error('Customer ID not found in localStorage');
-      return; // Exit the function if customerId is null
-    }
+   
     const content = suggesttion.trim();
     const [title, description] = content.split(':').map(part => part.trim())
     this.taskService.addTask({
       title: title, 
       description: description,
-      completed: false,
-      customerId: customerId
+      completed: false
     }).subscribe(addedTask => {
       this.tasks.push(addedTask);
-      if (customerId){
-        this.loadTasks(customerId);
-      }
-      
+      this.loadTasks();
     });
   }
   logout(): void {
@@ -124,10 +109,7 @@ export class TaskListComponent implements OnInit {
 
     this.logoutService.logout(token).subscribe({
       next: () => {
-        // Clear local storage
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('customerId');
-
+      
         // Redirect to login page
         this.router.navigate(['/login']);
       },

@@ -14,7 +14,7 @@
       [(ngModel)]="taskKeyword"
       placeholder="Enter a keyword for suggestions"
     />
-    <button mat-raised-button color="primary"  [disabled]="isLoading" (click)="generateSuggestions()" class="spinner-button">
+    <button mat-raised-button color="primary"  [disabled]="isLoading || !taskKeyword.trim()" (click)="generateSuggestions()" class="spinner-button">
           <mat-progress-spinner
             *ngIf="isLoading"
             mode="indeterminate"

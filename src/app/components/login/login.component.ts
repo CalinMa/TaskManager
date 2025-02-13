@@ -22,7 +22,7 @@ export class LoginComponent {
     });
 
     this.twoFactorForm = this.fb.group({
-      twoFactorCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]], // 6-digit code
+      twoFactorCode: ['', [Validators.required, Validators.pattern(/^\d{6}$/)]],
     });
   }
 
@@ -35,7 +35,7 @@ export class LoginComponent {
     this.loginService.login(loginData).subscribe({
       next: (response: any) => {
         console.log('Login successful, awaiting 2FA:', response);
-        localStorage.setItem('customerId', response.userId);
+      
         this.isTwoFactorStage = true;
         this.userId = response.userId;
         this.isLoading = false;
@@ -53,15 +53,14 @@ export class LoginComponent {
   
     this.isLoading = true;
     const twoFactorData = {
-      userId: this.userId!, // Non-null assertion
+      userId: this.userId!,
       twoFactorCode: this.twoFactorForm.value.twoFactorCode,
     };
   
     this.loginService.verify2FA(twoFactorData).subscribe({
       next: (response: any) => {
         console.log('2FA verification successful:', response);
-        // alert('Login successful!');
-        localStorage.setItem('authToken', response.token);
+       
         this.isLoading = false;
         this.router.navigate(['/tasks']);
       },

@@ -8,7 +8,7 @@ const customerSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   phoneNumber: { type: Number, required: true },
   isActive: { type: Boolean, default: true },
-  twoFactorCode: { type: Number, default: null }, // Add field for 2FA code
+  twoFactorCode: { type: Number, default: null },
 });
 
 customerSchema.pre('save', async function (next) {
