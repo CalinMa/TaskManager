@@ -1,16 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = 'http://localhost:3000/api/auth/login'; // API endpoint for login
-  private verify2FAUrl = 'http://localhost:3000/api/auth/verify-2fa'; // API endpoint for 2FA verification
+  // private loginUrl = 'http://localhost:3000/api/auth/login'; // API endpoint for login
+  // private verify2FAUrl = 'http://localhost:3000/api/auth/verify-2fa'; // API endpoint for 2FA verification
 
   //private loginUrl = 'https://taskmanager-backend-811345708928.europe-west10.run.app/api/auth/login'; // API endpoint for login
   //private verify2FAUrl = 'https://taskmanager-backend-811345708928.europe-west10.run.app/api/auth/verify-2fa'; // API endpoint for 2FA verification
+
+  private baseApiUrl = environment.apiUrl;
+  private loginUrl = `${this.baseApiUrl}/api/auth/login`;
+  private verify2FAUrl = `${this.baseApiUrl}/api/auth/verify-2fa`
+
+  // private loginUrl = 'http://localhost:3000/api/auth/login'; // API endpoint for login
+  // private verify2FAUrl = 'http://localhost:3000/api/auth/verify-2fa'; // API endpoint for 2FA verification
 
   constructor(private http: HttpClient) {}
 

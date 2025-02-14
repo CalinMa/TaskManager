@@ -3,13 +3,20 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  private apiUrl = 'http://localhost:3000/api/customers';
+  // private apiUrl = 'http://localhost:3000/api/customers';
 //  private apiUrl = 'https://taskmanager-backend-811345708928.europe-west10.run.app/api/customers';
+
+  // Base API URL from environment
+  private baseApiUrl = environment.apiUrl;
+
+  // Customer-specific endpoints
+  private apiUrl = `${this.baseApiUrl}/api/customers`;
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {}
 
