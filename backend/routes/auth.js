@@ -15,36 +15,43 @@ export function authRoutes(app) {
     }
   });
 
-  // Verify 2FA Route
-  router.post('/verify-2fa', async (req, res) => {
-    try {
-      console.log('Request Body:', req.body);
+// Verify 2FA Route with cookies
+router.post('/verify-2fa', async (req, res) => {
+  try {
+    const { userId, twoFactorCode } = req.body;
+
+    // Verify the 2FA and retrieve the JWT token
+    const result = await verifyTwoFactorCode(userId, twoFactorCode);
+    const token = result.token;  // Access the token from the result object
+    console.log('cookie token', token);
+    // Set the raw JWT token directly in the cookie
+    res.cookie('authToken', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: 'Strict',
+      maxAge: 3600000, // 1 hour
+    });
+
+    res.status(200).json({ message: 'Login successful' });
+  } catch (error) {
+    console.error('Error in 2FA Verification:', error.message);
+    res.status(401).json({ message: error.message });
+  }
+});
+
+
   
-      const { userId, twoFactorCode } = req.body;
-  
-      // Call verifyTwoFactorCode to handle logic and get token
-      const token = await verifyTwoFactorCode(userId, twoFactorCode);
-  
-      console.log('Token Sent to Client:', token);
-      res.status(200).json({ message: 'Login successful', token });
-    } catch (error) {
-      console.error('Error in 2FA Verification:', error.message);
-      res.status(401).json({ message: error.message });
-    }
+app.post('/api/logout', (req, res) => {
+  // Clear the authToken cookie
+  res.clearCookie('authToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
   });
-  
-  app.post('/api/logout', (req, res) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract token from Authorization header
-    if (!token) {
-      return res.status(400).json({ message: 'No token provided' });
-    }
-  
-    // If tokens are stored in a database or cache, invalidate the token here
-    // Example: Remove the token from a database or in-memory store
-    console.log(`Invalidating token: ${token}`);
-  
-    res.status(200).json({ message: 'Logout successful' });
-  });
+
+  res.status(200).json({ message: 'Logout successful' });
+});
+
   
 
   app.use('/api/auth', router);

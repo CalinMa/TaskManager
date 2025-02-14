@@ -5,15 +5,14 @@ import { TaskDetailComponent } from './components/task-detail/task-detail.compon
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuard] },
-  { path: 'tasks/:id', component: TaskDetailComponent, canActivate: [AuthGuard] },
-  { path: 'new-task', component: TaskFormComponent,canActivate: [AuthGuard] }
+  { path: 'tasks', component: TaskListComponent},
+  { path: 'tasks/:id', component: TaskDetailComponent},
+  { path: 'new-task', component: TaskFormComponent}
 ];
 
 @NgModule({

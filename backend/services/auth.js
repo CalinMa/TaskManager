@@ -54,7 +54,7 @@ export async function verifyTwoFactorCode(userId, twoFactorCode) {
     }
 
     // Step 3: Generate a JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id, customerId: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1h',
     });
     console.log('JWT Token Generated:', token);

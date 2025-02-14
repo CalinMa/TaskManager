@@ -10,8 +10,8 @@ export class TaskService {
   private apiUrl = 'http://localhost:3000/api/tasks';
   constructor(private http: HttpClient) { }
 
-  getTasks(customerId: string): Observable<Task[]> {
-    return this.http.get<Task[]>(`${this.apiUrl}/${customerId}`);
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.apiUrl}`);
 }
 getTask(id: number): Observable<Task> {
   return this.http.get<Task>(`${this.apiUrl}/${id}`);
@@ -25,7 +25,7 @@ updateTask(task: Task): Observable<Task> {
   return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
 }
 
-deleteTask(id: number, customerId: string): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/${id}?customerId=${customerId}`);
+deleteTask(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.apiUrl}/${id}`);
 }
 }
